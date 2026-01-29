@@ -5,16 +5,17 @@ generator client {
   provider = "prisma-client-js"
 }
 
-datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
-}
-
-// SQLite 사용 시 아래 주석 해제하고 위 datasource 주석 처리
+// PostgreSQL 사용 시 아래 주석 해제하고 SQLite datasource 주석 처리
 // datasource db {
-//   provider = "sqlite"
+//   provider = "postgresql"
 //   url      = env("DATABASE_URL")
 // }
+
+// SQLite 사용 (개발 환경용)
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
 
 enum Role {
   ADMIN
@@ -46,8 +47,8 @@ model User {
 
 model Announcement {
   id        String   @id @default(uuid())
-  title     String   @db.VarChar(200)
-  content   String   @db.Text
+  title     String
+  content   String
   isPinned  Boolean  @default(false)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
